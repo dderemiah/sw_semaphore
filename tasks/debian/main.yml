@@ -1,5 +1,8 @@
 ---
 
+- name: Semaphore | Assertions
+  ansible.builtin.import_tasks: assert.yml
+
 - name: Semaphore | Install
   ansible.builtin.import_tasks: install.yml
 

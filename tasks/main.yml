@@ -18,40 +18,6 @@
       - not SEM_CONFIG.version.startswith('v')
   tags: always
 
-- name: Semaphore | Checking Nginx config
-  ansible.builtin.assert:
-    that:
-      - SEM_CONFIG.nginx.domain | default(none, true) is not none
-      - SEM_CONFIG.nginx.domain | valid_hostname
-      - SEM_CONFIG.nginx.ssl.mode != 'letsencrypt' or SEM_CONFIG.nginx.ssl.letsencrypt.mail | default(none, true) is not none
-  when: SEM_CONFIG.manage.webserver | bool
-  tags: webserver
-
-- name: Semaphore | Checking Database config if managed
-  ansible.builtin.assert:
-    that:
-      - SEM_CONFIG.config.mysql.host == '127.0.0.1:3306'
-      - SEM_CONFIG.config.mysql.user | default(none, true) is none
-      - SEM_CONFIG.config.mysql.pass | default(none, true) is none
-      - SEM_CONFIG.config.mysql.name | default(none, true) is none
-      - SEM_CONFIG.database.user | default(none, true) is not none
-      - SEM_CONFIG.database.pwd | default(none, true) is not none
-      - SEM_CONFIG.database.name | default(none, true) is not none
-  when: SEM_CONFIG.manage.database | bool
-  tags: [database, config]
-
-- name: Semaphore | Checking Database config if unmanaged
-  ansible.builtin.assert:
-    that:
-      - SEM_CONFIG.config[sem_db]host | default(none, true) is not none
-      - SEM_CONFIG.config[sem_db]user | default(none, true) is not none
-      - SEM_CONFIG.config[sem_db]pass | default(none, true) is not none
-      - SEM_CONFIG.config[sem_db]name | default(none, true) is not none
-  vars:
-    sem_db: "{{ SEM_CONFIG.config.dialect }}"
-  when: not SEM_CONFIG.manage.database | bool
-  tags: [database, config]
-
 - name: Semaphore | Checking Admin-User config
   ansible.builtin.assert:
     that:
