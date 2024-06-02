@@ -38,68 +38,7 @@ ansible-galaxy install ansibleguy.sw_semaphore --roles-path ./roles
 ansible-galaxy install -r requirements.yml
 ```
 
-## Functionality
-
-* **Package installation**
-  * Ansible-Semaphore in the specified version
-  * Python3 PIP
-  * Python3 Virtual-Environment
-    * Ansible
-    * common Ansible Jinja-Filter dependencies
-  * Git
-
-
-* **Configuration**
-  * Service: 'semaphore.service'
-  * Service-user: 'semaphore'
-
-
-  * **Default config**:
-    * Directories:
-      * Venv: '/var/local/lib/semaphore_venv'
-      * Config: '/etc/semaphore'
-      * Backup: '/var/backups/semaphore'
-      * Tmp/Run: '/tmp/.semaphore'
- 
-
-  * **Default opt-ins**:
-    * Nginx proxy => using [THIS Role](https://github.com/ansibleguy/infra_nginx)
-    * MariaDB database => using [THIS Role](https://github.com/ansibleguy/infra_mariadb)
-    * Daily local database backup (_if database is managed_)
-      * Backup service: 'semaphore-backup.service'
-    * Provisioning 'ansible.cfg' for serviceuser
-    * Adding admin-user after installation
-
-  * **Default opt-outs**:
-    * Persistent requirements
-      * Update service: 'semaphore-requirements.service'
-
-## Info
-
-* **Note:** this role currently only supports debian-based systems
-
-
-* **Note:** Most of the role's functionality can be opted in or out.
-
-  For all available options - see the default-config located in [the main defaults-file](https://github.com/ansibleguy/sw_semaphore/blob/latest/defaults/main/1_main.yml)!
-
-
-* **Warning:** Not every setting/variable you provide will be checked for validity. Bad config might break the role!
-
-
-* **Note:** If you like to use docker => you might want to check out [the official docker-image of Ansible-Semaphore](https://hub.docker.com/r/semaphoreui/semaphore) instead!
-
-
-* **Info:** Persistent requirements can be used to speed up executions:
-
-  It will install & update ansible-roles & ansible-collections using an external service/timer.
-
-  By default, semaphore will need to re-install them ON EACH EXECUTION.
-
-  For this to work - you will also have to make sure that the requirements files do not exist in your repositories:
-
-  * $REPO/collections/requirements.yml
-  * $REPO/roles/requirements.yml
+----
 
 ## Usage
 
@@ -210,3 +149,70 @@ To debug errors - you can set the 'debug' variable at runtime:
 ```bash
 ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 ```
+
+----
+
+## Functionality
+
+* **Package installation**
+  * Ansible-Semaphore in the specified version
+  * Python3 PIP
+  * Python3 Virtual-Environment
+    * Ansible
+    * common Ansible Jinja-Filter dependencies
+  * Git
+
+
+* **Configuration**
+  * Service: 'semaphore.service'
+  * Service-user: 'semaphore'
+
+
+  * **Default config**:
+    * Directories:
+      * Venv: '/var/local/lib/semaphore_venv'
+      * Config: '/etc/semaphore'
+      * Backup: '/var/backups/semaphore'
+      * Tmp/Run: '/tmp/.semaphore'
+ 
+
+  * **Default opt-ins**:
+    * Nginx proxy => using [THIS Role](https://github.com/ansibleguy/infra_nginx)
+    * MariaDB database => using [THIS Role](https://github.com/ansibleguy/infra_mariadb)
+    * Daily local database backup (_if database is managed_)
+      * Backup service: 'semaphore-backup.service'
+    * Provisioning 'ansible.cfg' for serviceuser
+    * Adding admin-user after installation
+
+  * **Default opt-outs**:
+    * Persistent requirements
+      * Update service: 'semaphore-requirements.service'
+
+----
+
+## Info
+
+* **Note:** this role currently only supports debian-based systems
+
+
+* **Note:** Most of the role's functionality can be opted in or out.
+
+  For all available options - see the default-config located in [the main defaults-file](https://github.com/ansibleguy/sw_semaphore/blob/latest/defaults/main/1_main.yml)!
+
+
+* **Warning:** Not every setting/variable you provide will be checked for validity. Bad config might break the role!
+
+
+* **Note:** If you like to use docker => you might want to check out [the official docker-image of Ansible-Semaphore](https://hub.docker.com/r/semaphoreui/semaphore) instead!
+
+
+* **Info:** Persistent requirements can be used to speed up executions:
+
+  It will install & update ansible-roles & ansible-collections using an external service/timer.
+
+  By default, semaphore will need to re-install them ON EACH EXECUTION.
+
+  For this to work - you will also have to make sure that the requirements files do not exist in your repositories:
+
+  * $REPO/collections/requirements.yml
+  * $REPO/roles/requirements.yml
