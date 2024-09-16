@@ -30,7 +30,6 @@
 
 - name: Semaphore | Config | Generate secrets
   when: sem_cur_cnf.stdout | default(none, true) is none
-  connection: local
   become: false
   block:
     - name: Semaphore | Config | Generate 'cookie_hash'
