@@ -1,0 +1,8 @@
+# semaphore architecture dictionary
+arch: "{{ ansible_architecture }}"
+
+arch_dl: {
+    aarch64: arm64,
+    arm64: arm64,
+    x86_64: amd64
+    }

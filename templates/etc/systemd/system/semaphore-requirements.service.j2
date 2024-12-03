@@ -12,10 +12,10 @@ ExecStart=/bin/bash -c 'source {{ SEM_CONFIG.path.venv }}/bin/activate \
                         && pip install --upgrade -r {{ SEM_HC.req_prefix }}pip.txt \
 {% endif %}
 {% if SEM_CONFIG.requirements.collections | length > 0 %}
-                        && ansible-galaxy collection install --upgrade -p {{ SEM_HC.collections }} -r {{ SEM_HC.req_prefix }}collections.yml \
+                        && ansible-galaxy collection install --upgrade --collections-path {{ SEM_HC.collections }} --requirements-file {{ SEM_HC.req_prefix }}collections.yml \
 {% endif %}
 {% if SEM_CONFIG.requirements.roles | length > 0 %}
-                        && ansible-galaxy role install --force -p {{ SEM_HC.roles }} -r {{ SEM_HC.req_prefix }}roles.yml \
+                        && ansible-galaxy role install --force --roles-path {{ SEM_HC.roles }} --role-file {{ SEM_HC.req_prefix }}roles.yml \
 {% endif %}
                         '
 
