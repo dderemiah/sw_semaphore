@@ -86,6 +86,7 @@ defaults_sem:
     telegram_alert: false
     slack_alert: false
     demo_mode: false
+    use_remote_runner: false
     git_client: 'go_git' # can only be go_git or cmd_git
 
   ansible_config:  # ansible.cfg => https://docs.ansible.com/ansible/latest/reference_appendices/config.html
