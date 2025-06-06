@@ -7,6 +7,7 @@ SEM_HC:
   bin: '/usr/local/bin/semaphore'
   config: '/etc/semaphore/config.json'
   # dl_tmpl: "https://github.com/ansible-semaphore/semaphore/releases/download/v%s/semaphore_%s_linux_{{ arch_dl[{{ ansible_architecture }}] }}.tar.gz"
+  # dl_tmpl: '/tmp/semaphore_2.11.2_linux_amd64.tar.gz'
   dl_tmpl: "https://github.com/ansible-semaphore/semaphore/releases/download/v%s/semaphore_%s_linux_amd64.tar.gz"
   # dl_tmpl: "https://github.com/ansible-semaphore/semaphore/releases/download/v%s/semaphore_%s_linux_arm64.tar.gz"
   user: 'semaphore'

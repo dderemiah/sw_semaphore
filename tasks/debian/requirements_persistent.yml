@@ -57,7 +57,8 @@
     LC_ALL: 'en_US.UTF-8'
   register: sem_req_role
   changed_when: "'was installed' in sem_req_role.stdout"
-
+  ignore_errors: true
+  
 - name: Semaphore | Persistent-Requirements | Update-service
   ansible.builtin.template:
     src: "templates/etc/systemd/system/{{ SEM_HC.service_req }}.{{ item }}.j2"
