@@ -10,11 +10,11 @@
 
       collections:
       {% for col in SEM_CONFIG.requirements.collections %}
-        - '{{ col }}'
+        - {{ col }}
       {% endfor %}
 
     dest: "{{ SEM_HC.req_prefix }}collections.yml"
-    mode: 0640
+    mode: 0644
     owner: 'root'
     group: "{{ SEM_HC.user }}"
 
@@ -43,7 +43,7 @@
       {% endfor %}
 
     dest: "{{ SEM_HC.req_prefix }}roles.yml"
-    mode: 0640
+    mode: 0644
     owner: 'root'
     group: "{{ SEM_HC.user }}"
 
