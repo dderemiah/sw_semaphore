@@ -44,6 +44,7 @@
   when: sem_cur_bin.stat.exists
   changed_when: false
   check_mode: false
+  tags: upgrade
 
 - name: "Semaphore | Install | Installing version {{ SEM_CONFIG.version }}"
   when: >
@@ -71,6 +72,7 @@
         mode: 0750
         # validate: "%s version"
       notify: Sem-restart
+  tags: upgrade
 
 - name: Semaphore | Install | Service
   ansible.builtin.template:
@@ -78,6 +80,7 @@
     dest: "/etc/systemd/system/{{ SEM_HC.service }}"
     mode: 0644
   notify: Sem-restart
+  when: "'upgrade' not in ansible_run_tags" 
 
 - name: Semaphore | Install | Enabling Service
   ansible.builtin.systemd:
@@ -94,14 +97,18 @@
   args:
     apply:
       tags: database
-  when: SEM_CONFIG.manage.database | bool
+  when:
+    - SEM_CONFIG.manage.database | bool
+    - "'upgrade' not in ansible_run_tags"
   tags: database
 
 - name: Semaphore | Install | Unmanaged DB
   ansible.builtin.pause:
     prompt: 'Since this role is not managing the semaphore-database, you will need to install and configure it manually!
     Make sure the database is reachable before continuing!'
-  when: not SEM_CONFIG.manage.database | bool
+  when:
+    - not SEM_CONFIG.manage.database | bool
+    - "'upgrade' not in ansible_run_tags"
 
 - name: Semaphore | Install | Configuring Nginx webserver
   ansible.builtin.include_role:
@@ -110,7 +117,9 @@
     nginx:
       sites:
         semaphore: "{{ SEM_CONFIG.nginx }}"
-  when: SEM_CONFIG.manage.webserver | bool
+  when:
+    - SEM_CONFIG.manage.webserver | bool
+    - "'upgrade' not in ansible_run_tags"
   tags: webserver
   args:
     apply:

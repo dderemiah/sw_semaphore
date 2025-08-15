@@ -5,6 +5,7 @@
 
 - name: Semaphore | Install
   ansible.builtin.import_tasks: install.yml
+  tags: upgrade
 
 - name: Semaphore | Config
   ansible.builtin.import_tasks: config.yml
