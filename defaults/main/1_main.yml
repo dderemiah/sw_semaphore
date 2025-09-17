@@ -13,7 +13,7 @@ defaults_sem:
     ansible_cfg: true  # provision /home/semaphore/.ansible.cfg
     admin: true
 
-  version: '2.8.90'
+  version: 'x' # you must specify a version
 
   path:
     tmp: '/tmp/.semaphore'
